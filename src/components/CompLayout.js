@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import _ from 'lodash'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,7 +25,7 @@ export default function ComponentLayout() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    utils.getItems(10).map(item => {
+    utils.getItems(5).map(item => {
       dispatch(actions.addItemToLayouts(item))
     })
   }, [dispatch])
