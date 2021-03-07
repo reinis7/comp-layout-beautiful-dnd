@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import api from 'helper/api';
-
+import * as types from 'store/types'
 
 //Get all unique userId's from list of posts, iterate over unique userids and fetch user for each userid
 
-export const fetchLayouts = () => async (dispatch, getState) => {
+export const fetchLayouts = () => async (dispatch) => {
 
   //Action Creators inside an Action Creator
   // await dispatch(fetchPosts());
@@ -14,16 +14,22 @@ export const fetchLayouts = () => async (dispatch, getState) => {
 
 
 //Action Creator returning a function using Redux-Thunk
-export const saveLayouts = () => async dispatch => {
-
+export const saveLayouts = (layouts) => async dispatch => {
   // const response = await jsonPlaceholder.get('/posts');
+  dispatch({ type: types.SAVE_ITEMS_LAYOUT_ACTIONS, payload: layouts })
+};
 
-  dispatch({ type: 'FETCH_POSTS', payload: response.data })
+export const addItemToLayouts = (item) => async dispatch => {
+  // const response = await jsonPlaceholder.get('/posts');
+  dispatch({ type: types.ADD_ITEM_TO_LAYOUT_ACTIONS, payload: item })
+};
 
+export const removeItemFromLayouts = (id) => async dispatch => {
+  // const response = await jsonPlaceholder.get('/posts');
+  dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS, payload: id })
 };
 
 export const deleteAllLayouts = () => async dispatch => {
-
   // const response = await jsonPlaceholder.get(`/users/${id}`);
-  // dispatch({ type: 'FETCH_USER', payload: response.data });
+  dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS });
 };

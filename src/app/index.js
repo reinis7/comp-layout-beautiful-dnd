@@ -1,12 +1,12 @@
 import React from 'react'
 import './index.css';
-import PreviewComponent from 'components/PreviewComponent';
+import ComponentLayout from 'components/ComponentLayout';
 import store from 'store'
 import { Provider } from 'react-redux'
 function App() {
   return (
     <Provider store={store}>
-      <PreviewComponent></PreviewComponent>
+      <ComponentLayout></ComponentLayout>
     </Provider>)
 }
 
