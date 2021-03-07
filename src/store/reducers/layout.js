@@ -4,7 +4,7 @@ const initialState = {
 }
 
 
-function layoutReducer(state = initialState, action) {
+export default function layoutReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_VISIBILITY_FILTER': {
       return Object.assign({}, state, {
