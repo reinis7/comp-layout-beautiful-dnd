@@ -1,22 +1,12 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import _ from 'lodash'
 
-import {
-  LINK_LABEL, TEXT_LABEL, IMAGE_LABEL, VIDEO_LABEL, CUSTOM_HTML_LABEL, TOOLS_COLUMN_ID,
-} from 'helper/constants'
+import useToolPaneItems from 'hooks/useToolPaneItems'
+import { TOOLS_COLUMN_ID } from 'helper/constants'
 
 export default function ToolPanel() {
-  const compTypes = useMemo(() => {
-    return [
-      { id: LINK_LABEL, content: LINK_LABEL },
-      { id: TEXT_LABEL, content: TEXT_LABEL },
-      { id: IMAGE_LABEL, content: IMAGE_LABEL },
-      { id: VIDEO_LABEL, content: VIDEO_LABEL },
-      { id: CUSTOM_HTML_LABEL, content: CUSTOM_HTML_LABEL }
-    ]
-  }, []);
-
+  const compTypes = useToolPaneItems();
   return (
     <Droppable
       isDropDisabled={true}

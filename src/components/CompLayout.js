@@ -10,9 +10,9 @@ import CompProperty from 'components/CompProperty'
 import CompPanel from 'components/CompPanel'
 
 import useReorderItem from 'hooks/useReorderItem'
+import useToolPaneItems from 'hooks/useToolPaneItems'
 import * as actions from 'store/actions'
 import * as utils from 'helper/utils'
-
 import { TOOLS_COLUMN_ID, COMPONENTS_COLUMN_ID } from 'helper/constants'
 
 
@@ -20,6 +20,8 @@ export default function ComponentLayout() {
 
   const components = useSelector(state => state.layout.components);
   const chooseItem = useSelector(state => state.layout.chooseItem);
+  const compTypes = useToolPaneItems();
+
 
   const reorderItem = useReorderItem();
   const dispatch = useDispatch();
@@ -48,9 +50,8 @@ export default function ComponentLayout() {
         );
         dispatch(actions.saveLayouts(newItems));
       } else if (source.droppableId === TOOLS_COLUMN_ID) {
-        const addedItem = utils.genItem()
+        const addedItem = utils.genItem(compTypes[source.index])
         components.splice(destination.index, 0, addedItem);
-        console.log(components);
         dispatch(actions.saveLayouts(components));
       }
     }
