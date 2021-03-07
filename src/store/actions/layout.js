@@ -33,3 +33,8 @@ export const deleteAllLayouts = () => async dispatch => {
   // const response = await jsonPlaceholder.get(`/users/${id}`);
   dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS });
 };
+// component
+export const chooseComponent = (item) => async dispatch => {
+  dispatch({ type: types.CHOOSE_COMPONENT_ITEM, payload: item });
+};
+

@@ -1,14 +1,20 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react'
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useCallback } from 'react'
+import { Droppable, Draggable } from "react-beautiful-dnd";
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 import styled from 'styled-components';
 
 import { COMPONENTS_COLUMN_ID } from 'helper/constants'
+import { chooseComponent } from 'store/actions'
 
 export default function ComponentPanel() {
 
   const components = useSelector(state => state.layout.components);
+  const dispatch = useDispatch();
+
+  const handleItemClick = useCallback((item) => {
+    dispatch(chooseComponent(item))
+  }, [dispatch])
 
   return (
     <Droppable droppableId={COMPONENTS_COLUMN_ID}>
@@ -24,6 +30,7 @@ export default function ComponentPanel() {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  onClick={() => handleItemClick(item)}
                 >
                   {item.content}
                 </div>

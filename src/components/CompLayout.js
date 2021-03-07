@@ -19,7 +19,7 @@ import { TOOLS_COLUMN_ID, COMPONENTS_COLUMN_ID } from 'helper/constants'
 export default function ComponentLayout() {
 
   const components = useSelector(state => state.layout.components);
-  const chooseComp = useSelector(state => state.layout.chooseComp);
+  const chooseItem = useSelector(state => state.layout.chooseItem);
 
   const reorderItem = useReorderItem();
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export default function ComponentLayout() {
     <RootWrapper>
       <DragDropContext onDragEnd={onDragEnd}>
         <ToolPanelWrapper>
-          {chooseComp ? (<CompProperty></CompProperty>) : (<ToolPanel></ToolPanel>)}
+          {chooseItem ? (<CompProperty></CompProperty>) : (<ToolPanel></ToolPanel>)}
         </ToolPanelWrapper>
         <CompPanelWrapper>
           <CompPanel></CompPanel>

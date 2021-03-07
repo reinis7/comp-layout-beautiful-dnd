@@ -4,7 +4,7 @@ import * as utils from 'helper/utils'
 const initialState = {
   components: [],
   compoTypes: utils.getItems(5),
-  chooseComp: null,
+  chooseItem: null,
 }
 
 
@@ -22,6 +22,13 @@ export default function layoutReducer(state = initialState, action) {
         components: action.payload
       }
     }
+    case types.CHOOSE_COMPONENT_ITEM: {
+      return {
+        ...state,
+        chooseItem: action.payload
+      }
+    }
+
     default:
       return state
   }
