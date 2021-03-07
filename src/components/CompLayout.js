@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 
 import ToolPanel from 'components/ToolPanel'
+import CompProperty from 'components/CompProperty'
 import CompPanel from 'components/CompPanel'
 
 import useReorderItem from 'hooks/useReorderItem'
@@ -18,9 +19,11 @@ import { TOOLS_COLUMN_ID, COMPONENTS_COLUMN_ID } from 'helper/constants'
 export default function ComponentLayout() {
 
   const components = useSelector(state => state.layout.components);
+  const chooseComp = useSelector(state => state.layout.chooseComp);
 
   const reorderItem = useReorderItem();
   const dispatch = useDispatch();
+
   useEffect(() => {
     utils.getItems(10).map(item => {
       dispatch(actions.addItemToLayouts(item))
@@ -51,22 +54,48 @@ export default function ComponentLayout() {
         dispatch(actions.saveLayouts(components));
       }
     }
-
-
     // action
   }, [components, dispatch, reorderItem]);
   console.log(components);
   return (
-    <MultiLayout>
+    <RootWrapper>
       <DragDropContext onDragEnd={onDragEnd}>
-        <ToolPanel ></ToolPanel>
-        <CompPanel></CompPanel>
+        <ToolPanelWrapper>
+          {chooseComp ? (<CompProperty></CompProperty>) : (<ToolPanel></ToolPanel>)}
+        </ToolPanelWrapper>
+        <CompPanelWrapper>
+          <CompPanel></CompPanel>
+        </CompPanelWrapper>
       </DragDropContext>
-    </MultiLayout >
+    </RootWrapper >
   )
 }
 
-const MultiLayout = styled.div`    
-  display: flex;
-  justify-content: space-around;
+const RootWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+
+`
+
+const ToolPanelWrapper = styled.div`
+    flex: 1 0 20%;
+    width: 20%;
+    max-width: 230px;
+    min-width: 230px;
+    height: 100vm;
+    padding: 10px;
+    background-color: #4caf50;
+`
+
+const CompPanelWrapper = styled.div`
+    flex: 1 0 80%;
+    width: 80%;
+    max-width: 80%;
+    height: 100%;
+    padding: 10px;
+    background-color: #eeeeee;
+    min-height: 20rem;
 `
