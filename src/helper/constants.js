@@ -6,26 +6,6 @@ export const CUSTOM_HTML_LABEL = 'CUSTOM_HTML';
 export const TOOLS_COLUMN_ID = 'TOOL_COLUMN_ID'
 export const COMPONENTS_COLUMN_ID = 'COMPONENTS_COLUMN_ID'
 
-export const COMPONENT_TYPES = {
-  [LINK_LABEL]: {
-    label: 'LINK',
-  },
-  [TEXT_LABEL]: {
-    label: 'TEXT',
-  },
-  [IMAGE_LABEL]: {
-    label: 'IMAGE',
-  },
-  [VIDEO_LABEL]: {
-    label: 'VIDEO',
-  },
-  [CUSTOM_HTML_LABEL]: {
-    label: 'CUSTOM HTML',
-  }
-};
-
-export const DROPPING_ITEM = 'DROPPING_ITEM';
 export const CONTENT_NAME = 'CONTENT_NAME';
 export const CODE_NAME = 'CODE_NAME';
 
-export const ATTR_PARAMS = ['url', 'label', 'content']

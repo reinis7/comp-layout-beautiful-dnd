@@ -28,7 +28,7 @@ export default function RenderComp({ type, ...rest }) {
 				</>
 			)
 		case LINK_LABEL:
-			return <Link href={rest.url}> {rest.label}</Link>
+			return <Link href={rest.url}> {rest.content}</Link>
 		case TEXT_LABEL:
 			return <Text>{rest.content}</Text>
 		case IMAGE_LABEL:

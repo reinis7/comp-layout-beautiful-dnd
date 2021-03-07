@@ -24,7 +24,7 @@ export const genItem = (type = constant.LINK_LABEL) => {
       break;
     case LINK_LABEL:
       newItem.url = '';
-      newItem.label = 'Link';
+      newItem.content = 'Link';
       newItem.isLoading = true;
       break;
     case TEXT_LABEL:

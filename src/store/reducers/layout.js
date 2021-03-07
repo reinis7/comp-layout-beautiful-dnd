@@ -28,6 +28,13 @@ export default function layoutReducer(state = initialState, action) {
         chooseItem: action.payload
       }
     }
+    case types.UPDATE_COMPONENT_ITEM: {
+      const item = action.payload;
+      return {
+        ...state,
+        components: state.components.map(_ => _.id != item.id ? _ : item)
+      }
+    }
 
     default:
       return state

@@ -37,6 +37,13 @@ export const deleteAllLayouts = () => async dispatch => {
 export const chooseComponent = (item) => async dispatch => {
   dispatch({ type: types.CHOOSE_COMPONENT_ITEM, payload: item });
 };
+export const updateComponent = (item) => async dispatch => {
+  await dispatch({ type: types.UPDATE_COMPONENT_ITEM, payload: item });
+  dispatch(chooseComponent(null));
+};
+
+
+
 
 //  code submit
 export const submitCodes = (codelines) => async dispatch => {

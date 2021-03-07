@@ -1,31 +1,57 @@
-import React, { useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { chooseComponent } from 'store/actions'
+import { updateComponent } from 'store/actions'
+import _ from 'lodash'
 
 export default function CompProperty() {
   const chooseItem = useSelector(state => state.layout.chooseItem)
+  const [comProp, setCompProp] = useState({});
+
   const dispatch = useDispatch();
-  const handleUpdateValue = useCallback((e) => {
-  }, [dispatch]);
+
+  useEffect(() => {
+    setCompProp(chooseItem);
+  }, [chooseItem])
 
   const handleSaveModal = useCallback((e) => {
-    dispatch(chooseComponent(null));
-  }, [dispatch]);
+    dispatch(updateComponent(comProp))
+  }, [dispatch, comProp]);
+
   const handleCancelModal = useCallback((e) => {
-  }, [dispatch]);
+    setCompProp(chooseItem);
+  }, [chooseItem]);
+
+  const handleUpdateValue = useCallback((e) => {
+    console.log(e);
+    setCompProp({
+      ...comProp,
+      [e.target.name]: e.target.value
+    });
+  }, [comProp]);
+
+
+
 
   return (
     <div>
       <PreviewSettingWrapper>
-        <PreviewSettingTitle>{chooseItem.type}</PreviewSettingTitle>
-        <PreviewSettingSubtitle>[{chooseItem.id}]</PreviewSettingSubtitle >
-        <PreviewSettingContent>
+        <PreviewSettingTitle>{comProp.type}</PreviewSettingTitle>
+        <PreviewSettingSubtitle>[{comProp.id}]</PreviewSettingSubtitle >
+        {_.has(comProp, 'url') && (<PreviewSettingContent>
           <PreviewSettingPropertySection>
-            <strong>ABC</strong>:
-            <PreviewSettingInput onChange={handleUpdateValue} />
+            <strong>URL</strong>:
+            <PreviewSettingInput name='url' onChange={handleUpdateValue} value={comProp.url} />
           </PreviewSettingPropertySection>
-        </PreviewSettingContent>
+        </PreviewSettingContent>)}
+
+        {comProp.content && (<PreviewSettingContent>
+          <PreviewSettingPropertySection>
+            <strong>CONTENT</strong>:
+            <PreviewSettingInput name='content' onChange={handleUpdateValue} value={comProp.content} />
+          </PreviewSettingPropertySection>
+        </PreviewSettingContent>)}
+
         <PreviewSettingActioins>
           <CommonButton onClick={handleSaveModal}>Save</CommonButton>
           <CommonButton onClick={handleCancelModal}>restore</CommonButton>
