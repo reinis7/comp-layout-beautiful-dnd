@@ -72,6 +72,7 @@ export default function ComponentPanel() {
 
 const RenderCompWrapper = styled.div`
   border: 1px solid rgb(136, 136, 136);
+  position: relative;
 `
 const SwitchButton = styled.button`
 

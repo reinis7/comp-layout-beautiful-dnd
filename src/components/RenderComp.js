@@ -4,15 +4,6 @@ import { IMAGE_LABEL, VIDEO_LABEL, LINK_LABEL, TEXT_LABEL, CUSTOM_HTML_LABEL } f
 import parse from "html-react-parser";
 import styled from 'styled-components';
 
-const VideoWrapper = styled.div`
-	display: grid;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10;
-`
 
 export default function RenderComp({ type, ...rest }) {
 
@@ -29,11 +20,11 @@ export default function RenderComp({ type, ...rest }) {
 		case VIDEO_LABEL:
 			return (
 				<>
-					<Video width="100%" height="100%" controls >
+					<Video controls >
 						<source src={rest.url} type="video/mp4" />
 									Your browser does not support the video tag.
 					</Video>
-					{rest.output && (<VideoWrapper />)}
+					{!rest.output && (<VideoWrapper />)}
 				</>
 			)
 		case LINK_LABEL:
@@ -54,6 +45,15 @@ const Image = styled.img`
 const Video = styled.video`
 	width: 100%;
 `
+const VideoWrapper = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+`
+
 const Link = styled.a`
 `
 const Text = styled.p`
