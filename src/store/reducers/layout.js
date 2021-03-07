@@ -1,7 +1,9 @@
 import * as types from 'store/types'
+import * as utils from 'helper/utils'
 
 const initialState = {
   components: [],
+  compoTypes: utils.getItems(5),
   choose: null,
 }
 
