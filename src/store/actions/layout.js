@@ -38,6 +38,7 @@ export const chooseComponent = (item) => async dispatch => {
   dispatch({ type: types.CHOOSE_COMPONENT_ITEM, payload: item });
 };
 
+//  code submit
 export const submitCodes = (codelines) => async dispatch => {
   dispatch({ type: types.SUBMIT_CODE_LINES, payload: codelines });
 };
