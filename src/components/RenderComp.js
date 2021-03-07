@@ -4,15 +4,15 @@ import { IMAGE_LABEL, VIDEO_LABEL, LINK_LABEL, TEXT_LABEL, CUSTOM_HTML_LABEL } f
 import parse from "html-react-parser";
 import styled from 'styled-components';
 
-// const VideoWrapper = styled.div`
-// 	display: grid;
-// 	position: absolute;
-// 	top: 0;
-// 	left: 0;
-// 	width: 100%;
-// 	height: 100%;
-// 	z-index: 10;
-// `
+const VideoWrapper = styled.div`
+	display: grid;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+`
 
 export default function RenderComp({ type, ...rest }) {
 
@@ -25,33 +25,36 @@ export default function RenderComp({ type, ...rest }) {
 	}), []);
 
 
-	let render_comp = '<></>'
 	switch (type) {
 		case VIDEO_LABEL:
-			render_comp =
+			return (
 				<>
-					<video width="100%" height="100%" controls >
+					<Video width="100%" height="100%" controls >
 						<source src={rest.url} type="video/mp4" />
 									Your browser does not support the video tag.
-					</video>
+					</Video>
+					{rest.output && (<VideoWrapper />)}
 				</>
-			break;
+			)
 		case LINK_LABEL:
-			render_comp = <a href={rest.url}> {rest.label}</a>
-			break;
+			return <Link href={rest.url}> {rest.label}</Link>
 		case TEXT_LABEL:
-			render_comp = <p> {rest.content}</p>
-			break;
-
+			return <Text>{rest.content}</Text>
 		case IMAGE_LABEL:
-			render_comp = <div className="img-wrap"><img src={rest.url} alt="IMAGE NOT FOUND" /></div>
-			break;
-
+			return <Image src={rest.url} alt="IMAGE NOT FOUND" />
 		case CUSTOM_HTML_LABEL:
-			render_comp = parse(rest.content, htmlParseOptions);
-			break;
+			return parse(rest.content, htmlParseOptions);
 		default:
-			render_comp = <span> New Item</span>
+			return <Text> New Item</Text>
 	}
-	return render_comp;
 }
+const Image = styled.img`
+	width: 100%;
+`
+const Video = styled.video`
+	width: 100%;
+`
+const Link = styled.a`
+`
+const Text = styled.p`
+`

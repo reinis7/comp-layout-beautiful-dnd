@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 import styled from 'styled-components';
 
+import PreviewSource from 'components/PreviewSource'
+import RenderComp from 'components/RenderComp'
+
 import { COMPONENTS_COLUMN_ID, CODE_NAME, CONTENT_NAME } from 'helper/constants'
 import { chooseComponent } from 'store/actions'
-import PreviewSource from 'components/PreviewSource'
 
 export default function ComponentPanel() {
 
@@ -46,14 +48,14 @@ export default function ComponentPanel() {
                 {_.isArray(components) && components.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
-                      <div
+                      <RenderCompWrapper
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         onClick={() => handleItemClick(item)}
                       >
-                        {item.content}
-                      </div>
+                        <RenderComp {...item} />
+                      </RenderCompWrapper>
                     )}
                   </Draggable>
                 ))}
@@ -68,7 +70,9 @@ export default function ComponentPanel() {
   )
 }
 
-
+const RenderCompWrapper = styled.div`
+  border: 1px solid rgb(136, 136, 136);
+`
 const SwitchButton = styled.button`
 
 `

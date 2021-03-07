@@ -50,7 +50,7 @@ export default function ComponentLayout() {
         );
         dispatch(actions.saveLayouts(newItems));
       } else if (source.droppableId === TOOLS_COLUMN_ID) {
-        const addedItem = utils.genItem(compTypes[source.index])
+        const addedItem = utils.genItem(compTypes[source.index].id)
         components.splice(destination.index, 0, addedItem);
         dispatch(actions.saveLayouts(components));
       }
@@ -94,7 +94,7 @@ const ToolPanelWrapper = styled.div`
 const CompPanelWrapper = styled.div`
     flex: 1 0 80%;
     width: 80%;
-    max-width: 80%;
+    max-width: 450px;
     height: 100%;
     padding: 10px;
     background-color: #eeeeee;
