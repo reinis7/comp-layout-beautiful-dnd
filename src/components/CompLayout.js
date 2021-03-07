@@ -60,12 +60,12 @@ export default function ComponentLayout() {
   return (
     <RootWrapper>
       <DragDropContext onDragEnd={onDragEnd}>
-        <ToolPanelWrapper>
-          {chooseItem ? (<CompProperty></CompProperty>) : (<ToolPanel></ToolPanel>)}
-        </ToolPanelWrapper>
         <CompPanelWrapper>
           <CompPanel></CompPanel>
         </CompPanelWrapper>
+        <ToolPanelWrapper>
+          {chooseItem ? (<CompProperty></CompProperty>) : (<ToolPanel></ToolPanel>)}
+        </ToolPanelWrapper>
       </DragDropContext>
     </RootWrapper >
   )

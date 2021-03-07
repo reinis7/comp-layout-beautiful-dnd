@@ -1,17 +1,19 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { chooseComponent } from 'store/actions'
 
 export default function CompProperty() {
   const chooseItem = useSelector(state => state.layout.chooseItem)
+  const dispatch = useDispatch();
   const handleUpdateValue = useCallback((e) => {
-  }, [useDispatch]);
+  }, [dispatch]);
+
   const handleSaveModal = useCallback((e) => {
-  }, [useDispatch]);
+    dispatch(chooseComponent(null));
+  }, [dispatch]);
   const handleCancelModal = useCallback((e) => {
-  }, [useDispatch]);
-
-
+  }, [dispatch]);
 
   return (
     <div>
