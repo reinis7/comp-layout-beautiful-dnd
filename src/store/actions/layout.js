@@ -40,11 +40,11 @@ export const removeItemFromLayouts = (id) => async dispatch => {
   await dispatch(saveToServer());
 };
 
-export const deleteAllLayouts = () => async dispatch => {
+export const deleteAllComponents = () => async dispatch => {
   // unselect choose item
   await dispatch(chooseComponent(null));
   //  remove items
-  await dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS });
+  await dispatch({ type: types.REMOVE_ALL_ITEMS_LAYOUT_ACTIONS });
   // save to the server
   await dispatch(saveToServer());
 };

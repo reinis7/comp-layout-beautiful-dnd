@@ -14,6 +14,18 @@ export default function layoutReducer(state = initialState, action) {
         components: action.payload
       }
     }
+    case types.REMOVE_ALL_ITEMS_LAYOUT_ACTIONS: {
+      return {
+        ...state,
+        components: []
+      }
+    }
+    case types.REMOVE_ITEM_LAYOUT_ACTIONS: {
+      return {
+        ...state,
+        components: state.components.filter(item => item.id != action.payload)
+      }
+    }
     case types.CHOOSE_COMPONENT_ITEM: {
       return {
         ...state,

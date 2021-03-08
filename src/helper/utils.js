@@ -13,7 +13,6 @@ export const genItem = (type = constant.LINK_LABEL) => {
     id,
     type,
     isLoading: false,
-    content: `item ${id}`,
   }
   switch (type) {
     case IMAGE_LABEL:

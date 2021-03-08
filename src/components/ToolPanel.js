@@ -1,12 +1,20 @@
-import React from 'react'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
+import styled from 'styled-components'
 import _ from 'lodash'
 
 import useToolPaneItems from 'hooks/useToolPaneItems'
 import { TOOLS_COLUMN_ID } from 'helper/constants'
+import { deleteAllComponents } from 'store/actions';
 
 export default function ToolPanel() {
   const compTypes = useToolPaneItems();
+  const dispatch = useDispatch();
+
+  const onRemoveAllItem = useCallback(() => {
+    dispatch(deleteAllComponents())
+  }, [dispatch])
   return (
     <div>
       <Droppable
@@ -35,6 +43,12 @@ export default function ToolPanel() {
           </div>
         )}
       </Droppable>
+      <div>
+        <RemoveButton onClick={onRemoveAllItem}> Remove All </RemoveButton>
+      </div>
     </div>
   )
 }
+
+const RemoveButton = styled.button`
+`;
