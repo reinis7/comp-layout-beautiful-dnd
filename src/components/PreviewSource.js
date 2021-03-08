@@ -46,4 +46,17 @@ export default function PreviewSource() {
 		</div>
 	);
 }
-const SubmitButton = styled.button``
+const SubmitButton = styled.button`
+	display: inline-block;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  color: #000;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+`

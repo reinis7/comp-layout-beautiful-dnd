@@ -21,15 +21,16 @@ export default function layoutReducer(state = initialState, action) {
       }
     }
     case types.REMOVE_ITEM_LAYOUT_ACTIONS: {
+      const lid = action.payload;
       return {
         ...state,
-        components: state.components.filter(item => item.id !== action.payload)
+        components: state.components.filter(item => item.id !== lid),
       }
     }
     case types.CHOOSE_COMPONENT_ITEM: {
       return {
         ...state,
-        chooseItem: action.payload
+        chooseItem: action.payload || null
       }
     }
     case types.UPDATE_COMPONENT_ITEM: {

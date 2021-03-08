@@ -13,6 +13,7 @@ import { chooseComponent, removeItemFromLayouts } from 'store/actions'
 export default function ComponentPanel() {
 
   const components = useSelector(state => state.layout.components);
+  const chooseItem = useSelector(state => state.layout.chooseItem);
   const dispatch = useDispatch();
 
   const handleItemClick = useCallback((item) => {
@@ -21,33 +22,41 @@ export default function ComponentPanel() {
 
   const [tabStatus, setTabStatus] = React.useState(CONTENT_NAME);
 
-  const handleRemoveItem = React.useCallback((item) => {
+  const handleRemoveItem = React.useCallback((item, e) => {
+    if (chooseItem && chooseItem.id === item.id) {
+      dispatch(chooseComponent(null));
+    }
     dispatch(removeItemFromLayouts(item.id))
-  }, [dispatch]);
+    e.stopPropagation();
+
+
+  }, [dispatch, chooseItem]);
 
   return (
-    <div>
+    <Content>
       <div>
-        <SwitchButton
+        <Button
           onClick={() => setTabStatus(CONTENT_NAME)}
           disabled={tabStatus === CONTENT_NAME}
         >
-          Layout
-        </SwitchButton>
-        <SwitchButton
+          <ButtonText>Layout</ButtonText>
+        </Button>
+        <Button
           onClick={() => setTabStatus(CODE_NAME)}
           disabled={tabStatus === CODE_NAME}
         >
-          CodeLines
-        </SwitchButton>
+          <ButtonText> CodeLines</ButtonText>
+        </Button>
+
       </div>
       <div>
         {tabStatus === CONTENT_NAME ?
           (<Droppable droppableId={COMPONENTS_COLUMN_ID}>
             {(provided, snapshot) => (
-              <div
+              <Container
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                isDraggingOver={snapshot.isDraggingOver}
               >
                 {_.isArray(components) && (components.length > 0 ? components.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -57,12 +66,12 @@ export default function ComponentPanel() {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         isDragging={snapshot.isDragging}
-                        onClick={() => handleItemClick(item)}
+                        onClick={(e) => handleItemClick(item, e)}
                       >
                         <RenderComp {...item} />
                         <CloseButton
                           key={item.id}
-                          onClick={() => handleRemoveItem(item)}
+                          onClick={(e) => handleRemoveItem(item, e)}
                         >
                           x
 							        </CloseButton>
@@ -73,22 +82,29 @@ export default function ComponentPanel() {
                   <Notice>Drop items here</Notice>
                 ))}
                 {provided.placeholder}
-              </div>
+              </Container>
             )}
           </Droppable>) : (
             <PreviewSource />
           )}
       </div>
-    </div>
+    </Content>
   )
 }
 
 const RenderCompWrapper = styled.div`
-  border: 1px solid rgb(136, 136, 136);
   position: relative;
-  userSelect: "none";  
-  margin: 0 0 10px 0;  
-  background: ${props => props.isDragging ? "lightgreen" : "grey"};
+  user-select: none;
+  padding: 0.5rem;
+  margin: 0 0  0.5rem 0;
+  align-items: flex-start;
+  align-content: flex-start;
+  line-height: 1.5;
+  border-radius: 3px;
+  background: #fff;
+  border: 1px ${props => (props.isDragging ? 'dashed #000' : 'solid #ddd')};
+  z-index: 1;
+  
   p {
     margin-block-start: 0.25rem;
     margin-block-end: 0.25rem;
@@ -96,9 +112,6 @@ const RenderCompWrapper = styled.div`
     margin-inline-end: 0px;
     margin-left: 0.25rem;
   }
-
-`
-const SwitchButton = styled.button`
 
 `
 const CloseButton = styled.div`
@@ -121,4 +134,38 @@ const Notice = styled.div`
   border: 1px solid transparent;
   line-height: 1.5;
   color: #aaa;
+`;
+
+const Content = styled.div`
+`;
+const List = styled.div`
+  border: 1px ${props => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
+  background: #fff;
+  padding: 0.5rem 0.5rem 0;
+  border-radius: 3px;
+  flex: 0 0 150px;
+  font-family: sans-serif;
+`;
+
+const Container = styled(List)`
+  margin: 0.5rem 0.5rem 1.5rem;
+`;
+
+const Button = styled.button`
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  color: ${props => props.disabled ? '#aaa' : '#000'};
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+`;
+
+const ButtonText = styled.div`
+  margin: 0 1rem;
 `;

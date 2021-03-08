@@ -16,7 +16,6 @@ export default function ToolPanel() {
     dispatch(deleteAllComponents())
   }, [dispatch])
 
-  console.log(compTypes)
 
   return (
     <div>

@@ -61,6 +61,7 @@ export default function ComponentLayout() {
     }
     dispatch(actions.saveLayouts(newComponents));
   }, [components, dispatch, reorderItem, compTypes, copyItem]);
+  console.log('chooseItem --', chooseItem)
 
   return (
     <RootWrapper>

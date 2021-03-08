@@ -54,7 +54,6 @@ const Item = styled.div`
   border-radius: 3px;
   background: #fff;
   border: 1px ${props => (props.isDragging ? 'dashed #000' : 'solid #ddd')};
-
  `;
 
 const Clone = styled(Item)`
@@ -111,6 +110,7 @@ const Notice = styled.div`
 `;
 
 const Button = styled.button`
+display: inline-block;
   display: flex;
   align-items: center;
   align-content: center;

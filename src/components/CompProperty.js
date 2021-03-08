@@ -15,7 +15,6 @@ export default function CompProperty() {
   }, [chooseItem])
 
   const handleSaveModal = useCallback((e) => {
-
     dispatch(updateComponent(comProp))
   }, [dispatch, comProp]);
 
