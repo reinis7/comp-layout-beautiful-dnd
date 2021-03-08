@@ -5,7 +5,7 @@ import parse from "html-react-parser";
 import styled from 'styled-components';
 
 
-export default function RenderComp({ type, ...rest }) {
+export default function RenderComp({ type, selected, ...rest }) {
 
 	const htmlParseOptions = React.useMemo(() => ({
 		replace: (domNode) => {
@@ -20,32 +20,32 @@ export default function RenderComp({ type, ...rest }) {
 		case VIDEO_LABEL:
 			return (
 				<>
-					<Video controls key={rest.url} >
+					<video controls key={rest.url} width="100%">
 						<source src={rest.url} type="video/mp4" />
 									Your browser does not support the video tag.
-					</Video>
+					</video>
 					{!rest.output && (<VideoWrapper />)}
 				</>
 			)
 		case LINK_LABEL:
-			return <Link href={rest.url}> {rest.content}</Link>
+			return <a href={rest.url}> {rest.content}</a>
 		case TEXT_LABEL:
-			return <Text>{rest.content}</Text>
+			return <p>{rest.content}</p>
 		case IMAGE_LABEL:
-			return <Image src={rest.url} alt="IMAGE NOT FOUND" />
+			return <img src={rest.url} alt="IMAGE NOT FOUND" style={{ width: '100%' }} />
 		case CUSTOM_HTML_LABEL:
 			return parse(rest.content, htmlParseOptions);
 		default:
-			return <Text> New Item</Text>
+			return <p> New Item</p>
 	}
 }
 
-const Image = styled.img`
-	width: 100%;
-`
-const Video = styled.video`
-	width: 100%;
-`
+// const Image = styled.img`
+// 	width: 100%;
+// `
+// const Video = styled.video`
+// 	width: 100%;
+// `
 const VideoWrapper = styled.div`
 	position: absolute;
 	top: 0;
@@ -55,8 +55,8 @@ const VideoWrapper = styled.div`
 	z-index: 10;
 `
 
-const Link = styled.a`
-	margin: 0.25rem;
-`
-const Text = styled.p`
-`
+// const Link = styled.a`
+// 	margin: 0.25rem;
+// `
+// const Text = styled.p`
+// `

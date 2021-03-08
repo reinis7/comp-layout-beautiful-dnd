@@ -28,6 +28,7 @@ export default function ComponentPanel() {
       components.map((item) => (
         <div key={item.id}>
           <RenderComp
+            output={true}
             {...item}
           />
         </div>)
