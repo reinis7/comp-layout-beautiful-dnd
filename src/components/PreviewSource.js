@@ -29,13 +29,14 @@ export default function PreviewSource() {
 		setCodeLines(cc);
 	}, [components])
 
-	const handleSumbmitCodes = React.useCallback((codes) => {
-		dispatch(submitCodes(codes))
-	}, [dispatch]);
+	const handleSumbmitCodes = React.useCallback(() => {
+		dispatch(submitCodes(codeLines))
+	}, [dispatch, codeLines]);
 
 	return (
 		<div>
-			<SubmitButton onClick={() => handleSumbmitCodes(codeLines)}> Sumbit</SubmitButton>
+			<SubmitButton onClick={handleSumbmitCodes}> Sumbit</SubmitButton>
+
 			<SyntaxHighlighter
 				language="html"
 				showLineNumbers={true}

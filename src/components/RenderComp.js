@@ -39,6 +39,7 @@ export default function RenderComp({ type, ...rest }) {
 			return <Text> New Item</Text>
 	}
 }
+
 const Image = styled.img`
 	width: 100%;
 `
@@ -54,7 +55,5 @@ const VideoWrapper = styled.div`
 	z-index: 10;
 `
 
-const Link = styled.a`
-`
-const Text = styled.p`
-`
+const Link = styled.a``
+const Text = styled.p``

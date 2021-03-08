@@ -10,6 +10,12 @@ const layoutAPI = {
   delete: (props = {}) => api.delete(LAYOUT_API_URL, props)
 }
 
+const CODE_SUBMIT_API_URL = '/api/send_codes';
+
+const codeSubmitAPI = {
+  post: (props = {}) => api.post(CODE_SUBMIT_API_URL, props),
+}
+
 
 
 export const fetchLayoutItems = () => async (dispatch) => {
@@ -42,19 +48,20 @@ export const deleteAllLayouts = () => async dispatch => {
   // save to the server
   await dispatch(saveToServer());
 };
+
 // component
 export const chooseComponent = (item) => async dispatch => {
   dispatch({ type: types.CHOOSE_COMPONENT_ITEM, payload: item });
 };
+
+
 export const updateComponent = (item) => async dispatch => {
   await dispatch({ type: types.UPDATE_COMPONENT_ITEM, payload: item });
   dispatch(chooseComponent(null));
 };
 
 
-
-
 //  code submit
-export const submitCodes = (codelines) => async dispatch => {
-  dispatch({ type: types.SUBMIT_CODE_LINES, payload: codelines });
+export const submitCodes = (codelines) => async () => {
+  codeSubmitAPI.post(codelines)
 };
