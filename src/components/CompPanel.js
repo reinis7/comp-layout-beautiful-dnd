@@ -8,7 +8,7 @@ import PreviewSource from 'components/PreviewSource'
 import RenderComp from 'components/RenderComp'
 
 import { COMPONENTS_COLUMN_ID, CODE_NAME, CONTENT_NAME } from 'helper/constants'
-import { chooseComponent } from 'store/actions'
+import { chooseComponent, removeItemFromLayouts } from 'store/actions'
 
 export default function ComponentPanel() {
 
@@ -20,6 +20,10 @@ export default function ComponentPanel() {
   }, [dispatch])
 
   const [tabStatus, setTabStatus] = React.useState(CONTENT_NAME);
+
+  const handleRemoveItem = React.useCallback((item) => {
+    dispatch(removeItemFromLayouts(item.id))
+  }, [dispatch]);
 
   return (
     <div>
@@ -55,6 +59,11 @@ export default function ComponentPanel() {
                         onClick={() => handleItemClick(item)}
                       >
                         <RenderComp {...item} />
+                        <CloseButton
+                          onClick={() => handleRemoveItem(item)}
+                        >
+                          x
+							        </CloseButton>
                       </RenderCompWrapper>
                     )}
                   </Draggable>
@@ -77,3 +86,12 @@ const RenderCompWrapper = styled.div`
 const SwitchButton = styled.button`
 
 `
+const CloseButton = styled.div`
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    font-weight: bold;
+    cursor: pointer;
+		z-index: 100
+`
+

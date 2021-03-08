@@ -1,22 +1,14 @@
 import * as types from 'store/types'
-import * as utils from 'helper/utils'
 
 const initialState = {
   components: [],
-  compoTypes: utils.getItems(5),
   chooseItem: null,
 }
 
 
 export default function layoutReducer(state = initialState, action) {
   switch (action.type) {
-    case types.ADD_ITEM_TO_LAYOUT_ACTIONS: {
-      return {
-        ...state,
-        components: state.components.map((item) => item).concat(action.payload)
-      }
-    }
-    case types.SAVE_ITEMS_LAYOUT_ACTIONS: {
+    case types.UPDATE_ITEMS_LAYOUT_ACTIONS: {
       return {
         ...state,
         components: action.payload
@@ -35,7 +27,6 @@ export default function layoutReducer(state = initialState, action) {
         components: state.components.map(_ => _.id != item.id ? _ : item)
       }
     }
-
     default:
       return state
   }

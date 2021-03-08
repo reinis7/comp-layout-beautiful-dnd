@@ -3,35 +3,44 @@ import api from 'helper/api';
 import * as types from 'store/types'
 
 //Get all unique userId's from list of posts, iterate over unique userids and fetch user for each userid
+const LAYOUT_API_URL = `/api/layout`;
+const layoutAPI = {
+  get: (props = {}) => api.get(LAYOUT_API_URL, props),
+  post: (props = {}) => api.post(LAYOUT_API_URL, props),
+  delete: (props = {}) => api.delete(LAYOUT_API_URL, props)
+}
 
-export const fetchLayouts = () => async (dispatch) => {
 
-  //Action Creators inside an Action Creator
-  // await dispatch(fetchPosts());
-  // const userIds = _.uniq(_.map(getState().posts, 'userId'));
-  // userIds.forEach(id => dispatch(fetchUser(id)));
+
+export const fetchLayoutItems = () => async (dispatch) => {
+  const items = await layoutAPI.get();
+  dispatch({ type: types.UPDATE_ITEMS_LAYOUT_ACTIONS, payload: items.data })
 };
-
 
 //Action Creator returning a function using Redux-Thunk
 export const saveLayouts = (layouts) => async dispatch => {
-  // const response = await jsonPlaceholder.get('/posts');
-  dispatch({ type: types.SAVE_ITEMS_LAYOUT_ACTIONS, payload: layouts })
+  await dispatch({ type: types.UPDATE_ITEMS_LAYOUT_ACTIONS, payload: layouts })
+  await dispatch(saveToServer());
 };
 
-export const addItemToLayouts = (item) => async dispatch => {
-  // const response = await jsonPlaceholder.get('/posts');
-  dispatch({ type: types.ADD_ITEM_TO_LAYOUT_ACTIONS, payload: item })
-};
+export const saveToServer = () => async (dispatch, getState) => {
+  const states = await getState();
+  const components = states.layout.components;
+  layoutAPI.post(components);
+}
 
 export const removeItemFromLayouts = (id) => async dispatch => {
-  // const response = await jsonPlaceholder.get('/posts');
-  dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS, payload: id })
+  const res = await dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS, payload: id })
+  await dispatch(saveToServer());
 };
 
 export const deleteAllLayouts = () => async dispatch => {
-  // const response = await jsonPlaceholder.get(`/users/${id}`);
-  dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS });
+  // unselect choose item
+  await dispatch(chooseComponent(null));
+  //  remove items
+  await dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS });
+  // save to the server
+  await dispatch(saveToServer());
 };
 // component
 export const chooseComponent = (item) => async dispatch => {

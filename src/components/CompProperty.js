@@ -23,7 +23,6 @@ export default function CompProperty() {
   }, [chooseItem]);
 
   const handleUpdateValue = useCallback((e) => {
-    console.log(e);
     setCompProp({
       ...comProp,
       [e.target.name]: e.target.value

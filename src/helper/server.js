@@ -9,20 +9,27 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
 
-let layout = {};
+let layoutStore = {
+  layouts: []
+};
 
 
 router.get('/layout', function (req, res) {
   // console.log(req.body);
-  res.send(layout, 200)
+  res.send(layoutStore.layouts, 200)
 });
 router.post('/layout', function (req, res) {
-  layout = req.body;
-  res.send(layout, 200)
-
+  layoutStore = {
+    layouts: req.body
+  };
+  res.send(layoutStore.layouts, 200)
 });
+
 router.delete('/layout', function (req, res) {
-  layout = {}
+  layoutStore = {
+    ...layoutStore,
+    layouts: []
+  }
   res.send({}, 200)
 });
 router.post('/send_codes', function (req, res) {

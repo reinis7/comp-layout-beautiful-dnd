@@ -27,9 +27,7 @@ export default function ComponentLayout() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    utils.getItems(5).map(item => {
-      dispatch(actions.addItemToLayouts(item))
-    })
+    dispatch(actions.fetchLayoutItems())
   }, [dispatch])
 
   const onDragEnd = useCallback((result) => {
@@ -43,14 +41,15 @@ export default function ComponentLayout() {
         if (destination.index === source.index) {
           return;
         }
-        const newItems = reorderItem(
+        const newComponents = reorderItem(
           components,
           result.source.index,
           result.destination.index
         );
-        dispatch(actions.saveLayouts(newItems));
+        dispatch(actions.saveLayouts(newComponents));
       } else if (source.droppableId === TOOLS_COLUMN_ID) {
         const addedItem = utils.genItem(compTypes[source.index].id)
+        console.log(components);
         components.splice(destination.index, 0, addedItem);
         dispatch(actions.saveLayouts(components));
       }
