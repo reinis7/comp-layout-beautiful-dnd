@@ -6,11 +6,11 @@ import {
 export default function useToolPaneItems() {
   return useMemo(() => {
     return [
-      { id: LINK_LABEL, content: LINK_LABEL },
-      { id: TEXT_LABEL, content: TEXT_LABEL },
-      { id: IMAGE_LABEL, content: IMAGE_LABEL },
-      { id: VIDEO_LABEL, content: VIDEO_LABEL },
-      { id: CUSTOM_HTML_LABEL, content: CUSTOM_HTML_LABEL }
+      { id: LINK_LABEL, content: 'Link' },
+      { id: TEXT_LABEL, content: 'Text' },
+      { id: IMAGE_LABEL, content: 'Image' },
+      { id: VIDEO_LABEL, content: 'Video' },
+      { id: CUSTOM_HTML_LABEL, content: 'Custom HTML' }
     ]
   }, []);
 }
