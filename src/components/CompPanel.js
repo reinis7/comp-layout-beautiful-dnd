@@ -1,16 +1,18 @@
-import React, { useCallback } from 'react'
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useCallback, useState, useEffect } from 'react'
+import ReactDOMServer from "react-dom/server"
+import { Droppable, Draggable } from "react-beautiful-dnd"
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
-import styled from 'styled-components';
+import styled from 'styled-components'
+import * as pretty from 'pretty'
 
-import PreviewSource from 'components/PreviewSource'
 import RenderComp from 'components/RenderComp'
 
-import { COMPONENTS_COLUMN_ID, CODE_NAME, CONTENT_NAME } from 'helper/constants'
-import { chooseComponent, removeItemFromLayouts } from 'store/actions'
+import { COMPONENTS_COLUMN_ID, CONTENT_NAME } from 'helper/constants'
+import { chooseComponent, removeItemFromLayouts, submitCodes } from 'store/actions'
 
 export default function ComponentPanel() {
+  const [codeLines, setCodeLines] = useState('');
 
   const components = useSelector(state => state.layout.components);
   const chooseItem = useSelector(state => state.layout.chooseItem);
@@ -20,75 +22,78 @@ export default function ComponentPanel() {
     dispatch(chooseComponent(item))
   }, [dispatch])
 
-  const [tabStatus, setTabStatus] = React.useState(CONTENT_NAME);
+  useEffect(() => {
+    console.log(components)
+    const cc = pretty(ReactDOMServer.renderToStaticMarkup(
+      components.map((item) => (
+        <div key={item.id}>
+          <RenderComp
+            {...item}
+          />
+        </div>)
+      )))
+    setCodeLines(cc);
+  }, [components])
 
   const handleRemoveItem = React.useCallback((item, e) => {
     if (chooseItem && chooseItem.id === item.id) {
       dispatch(chooseComponent(null));
     }
+
     dispatch(removeItemFromLayouts(item.id))
     e.stopPropagation();
-
-
   }, [dispatch, chooseItem]);
+
+  const handleSumbmitCodes = React.useCallback(() => {
+    dispatch(submitCodes(codeLines))
+  }, [dispatch, codeLines]);
+
 
   return (
     <Content>
       <div>
         <Button
-          onClick={() => setTabStatus(CONTENT_NAME)}
-          disabled={tabStatus === CONTENT_NAME}
+          onClick={handleSumbmitCodes}
         >
-          <ButtonText>Layout</ButtonText>
+          <ButtonText>Sumbit</ButtonText>
         </Button>
-        <Button
-          onClick={() => setTabStatus(CODE_NAME)}
-          disabled={tabStatus === CODE_NAME}
-        >
-          <ButtonText> CodeLines</ButtonText>
-        </Button>
-
       </div>
-      <div>
-        {tabStatus === CONTENT_NAME ?
-          (<Droppable droppableId={COMPONENTS_COLUMN_ID}>
-            {(provided, snapshot) => (
-              <Container
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                {_.isArray(components) && (components.length > 0 ? components.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided, snapshot) => (
-                      <RenderCompWrapper
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        isDragging={snapshot.isDragging}
-                        onClick={(e) => handleItemClick(item, e)}
-                      >
-                        <RenderComp {...item} />
-                        <CloseButton
-                          key={item.id}
-                          onClick={(e) => handleRemoveItem(item, e)}
-                        >
-                          x
-							        </CloseButton>
-                      </RenderCompWrapper>
-                    )}
-                  </Draggable>
-                )) : (
-                  <Notice>Drop items here</Notice>
-                ))}
-                {provided.placeholder}
-              </Container>
-            )}
-          </Droppable>) : (
-            <PreviewSource />
-          )}
-      </div>
-    </Content>
+      <Droppable droppableId={COMPONENTS_COLUMN_ID}>
+        {(provided, snapshot) => (
+          <Container
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            isDraggingOver={snapshot.isDraggingOver}
+          >
+            {_.isArray(components) && (components.length > 0 ? components.map((item, index) => (
+              <Draggable key={item.id} draggableId={item.id} index={index}>
+                {(provided, snapshot) => (
+                  <RenderCompWrapper
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    isDragging={snapshot.isDragging}
+                    onClick={(e) => handleItemClick(item, e)}
+                    choosed={chooseItem && chooseItem.id === item.id}
+                  >
+                    <RenderComp {...item} />
+                    <CloseButton
+                      key={item.id}
+                      onClick={(e) => handleRemoveItem(item, e)}
+                    >
+                      x
+                    </CloseButton>
+                  </RenderCompWrapper>
+                )}
+              </Draggable>
+            )) : (
+              <Notice>Drop items here</Notice>
+            ))}
+            {provided.placeholder}
+          </Container>
+        )}
+      </Droppable>
+    </Content >
   )
 }
 
@@ -103,8 +108,8 @@ const RenderCompWrapper = styled.div`
   border-radius: 3px;
   background: #fff;
   border: 1px ${props => (props.isDragging ? 'dashed #000' : 'solid #ddd')};
-  z-index: 1;
-  
+  background-color: ${props => (props.choosed ? '#ababab' : '#fff')};
+  z-index: 1;  
   p {
     margin-block-start: 0.25rem;
     margin-block-end: 0.25rem;
