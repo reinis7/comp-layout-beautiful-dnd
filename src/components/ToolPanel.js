@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import uuid from 'lodash-uuid'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import _ from 'lodash'
@@ -17,15 +16,18 @@ export default function ToolPanel() {
     dispatch(deleteAllComponents())
   }, [dispatch])
 
-  return (
+  console.log(compTypes)
 
+  return (
     <div>
+      <Button onClick={onRemoveAllItem}>  Remove All</Button>
       <Droppable
         isDropDisabled={true}
         droppableId={TOOLS_COLUMN_ID}
       >
         {(provided, snapshot) => (
           <Kiosk
+
             ref={provided.innerRef}
             isDraggingOver={snapshot.isDraggingOver}
             {...provided.droppableProps}
@@ -57,7 +59,6 @@ export default function ToolPanel() {
           </Kiosk>
         )}
       </Droppable>
-      <Button onClick={onRemoveAllItem}>  Remove All</Button>
     </div>
   )
 }
@@ -73,14 +74,13 @@ const Item = styled.div`
   line-height: 1.5;
   border-radius: 3px;
   background: #fff;
-  border: 1px ${props => (props.isDragging ? 'dashed #000' : 'solid #ddd')};
-
+  border: 1px ${props => (props.isDragging ? 'dashed #000' : 'solid #ddd')};      
+  transition-duration: 0.0001s;
  `;
 
 const Clone = styled(Item)`
   + div {
-    display: none!important;
-    border: red 1px solid;
+    display: ${props => (props.isDragging ? 'none' : 'block')};      
   }
 `;
 

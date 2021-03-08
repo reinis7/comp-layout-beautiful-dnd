@@ -10,11 +10,9 @@ import CompPanel from 'components/CompPanel'
 
 import useReorderItem from 'hooks/useReorderItem'
 import useCopyItem from 'hooks/useCopyItem'
-import useMoveItem from 'hooks/useMoveItem'
 import useToolPaneItems from 'hooks/useToolPaneItems'
 import * as actions from 'store/actions'
-import * as utils from 'helper/utils'
-import { TOOLS_COLUMN_ID, COMPONENTS_COLUMN_ID } from 'helper/constants'
+import { TOOLS_COLUMN_ID } from 'helper/constants'
 
 
 export default function ComponentLayout() {
@@ -26,7 +24,6 @@ export default function ComponentLayout() {
 
   const reorderItem = useReorderItem();
   const copyItem = useCopyItem();
-  const moveItem = useMoveItem();
 
   const dispatch = useDispatch();
 
@@ -59,20 +56,11 @@ export default function ComponentLayout() {
         break;
       }
       default: {
-
-        // newComponents =
-        //   moveItem(
-        //     this.state[source.droppableId],
-        //     this.state[destination.droppableId],
-        //     source,
-        //     destination
-        //   )
         break;
       }
     }
     dispatch(actions.saveLayouts(newComponents));
-
-  }, [components, dispatch, reorderItem, compTypes]);
+  }, [components, dispatch, reorderItem, compTypes, copyItem]);
 
   return (
     <RootWrapper>
