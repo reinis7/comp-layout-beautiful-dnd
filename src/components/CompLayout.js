@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import _ from 'lodash'
+import React, { useCallback, useEffect } from 'react'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
@@ -55,8 +54,8 @@ export default function ComponentLayout() {
       }
     }
     // action
-  }, [components, dispatch, reorderItem]);
-  console.log(components);
+  }, [components, dispatch, reorderItem, compTypes]);
+
   return (
     <RootWrapper>
       <DragDropContext onDragEnd={onDragEnd}>

@@ -56,10 +56,12 @@ export default function ComponentPanel() {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        isDragging={snapshot.isDragging}
                         onClick={() => handleItemClick(item)}
                       >
                         <RenderComp {...item} />
                         <CloseButton
+                          key={item.id}
                           onClick={() => handleRemoveItem(item)}
                         >
                           x
@@ -82,6 +84,17 @@ export default function ComponentPanel() {
 const RenderCompWrapper = styled.div`
   border: 1px solid rgb(136, 136, 136);
   position: relative;
+  userSelect: "none";  
+  margin: 0 0 10px 0;  
+  background: ${props => props.isDragging ? "lightgreen" : "grey"};
+  p {
+    margin-block-start: 0.25rem;
+    margin-block-end: 0.25rem;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin-left: 0.25rem;
+  }
+
 `
 const SwitchButton = styled.button`
 

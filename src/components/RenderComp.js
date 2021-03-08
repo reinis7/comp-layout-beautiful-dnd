@@ -20,7 +20,7 @@ export default function RenderComp({ type, ...rest }) {
 		case VIDEO_LABEL:
 			return (
 				<>
-					<Video controls >
+					<Video controls key={rest.url} >
 						<source src={rest.url} type="video/mp4" />
 									Your browser does not support the video tag.
 					</Video>
@@ -55,5 +55,8 @@ const VideoWrapper = styled.div`
 	z-index: 10;
 `
 
-const Link = styled.a``
-const Text = styled.p``
+const Link = styled.a`
+	margin: 0.25rem;
+`
+const Text = styled.p`
+`

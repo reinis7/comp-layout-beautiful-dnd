@@ -23,7 +23,7 @@ export default function layoutReducer(state = initialState, action) {
     case types.REMOVE_ITEM_LAYOUT_ACTIONS: {
       return {
         ...state,
-        components: state.components.filter(item => item.id != action.payload)
+        components: state.components.filter(item => item.id !== action.payload)
       }
     }
     case types.CHOOSE_COMPONENT_ITEM: {
@@ -36,7 +36,7 @@ export default function layoutReducer(state = initialState, action) {
       const item = action.payload;
       return {
         ...state,
-        components: state.components.map(_ => _.id != item.id ? _ : item)
+        components: state.components.map(_ => _.id !== item.id ? _ : item)
       }
     }
     default:

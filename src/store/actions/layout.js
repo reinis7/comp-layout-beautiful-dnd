@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import api from 'helper/api';
 import * as types from 'store/types'
 
@@ -36,7 +35,7 @@ export const saveToServer = () => async (dispatch, getState) => {
 }
 
 export const removeItemFromLayouts = (id) => async dispatch => {
-  const res = await dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS, payload: id })
+  await dispatch({ type: types.REMOVE_ITEM_LAYOUT_ACTIONS, payload: id })
   await dispatch(saveToServer());
 };
 
@@ -57,6 +56,8 @@ export const chooseComponent = (item) => async dispatch => {
 
 export const updateComponent = (item) => async dispatch => {
   await dispatch({ type: types.UPDATE_COMPONENT_ITEM, payload: item });
+  // save to the server
+  await dispatch(saveToServer());
   dispatch(chooseComponent(null));
 };
 
