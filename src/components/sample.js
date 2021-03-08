@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import uuid from 'uuid/v4';
+import uuid from 'lodash-uuid';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
+import { TOOLS_COLUMN_ID, COMPONENTS_COLUMN_ID } from 'helper/constants'
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -19,7 +19,7 @@ const copy = (source, destination, droppableSource, droppableDestination) => {
   const destClone = Array.from(destination);
   const item = sourceClone[droppableSource.index];
 
-  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() });
+  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid.uuid() });
   return destClone;
 };
 
@@ -131,30 +131,30 @@ const ButtonText = styled.div`
 
 const ITEMS = [
   {
-    id: uuid(),
+    id: uuid.uuid(),
     content: 'Headline'
   },
   {
-    id: uuid(),
+    id: uuid.uuid(),
     content: 'Copy'
   },
   {
-    id: uuid(),
+    id: uuid.uuid(),
     content: 'Image'
   },
   {
-    id: uuid(),
+    id: uuid.uuid(),
     content: 'Slideshow'
   },
   {
-    id: uuid(),
+    id: uuid.uuid(),
     content: 'Quote'
   }
 ];
 
 class SampleRender extends Component {
   state = {
-    [uuid()]: []
+    [uuid.uuid()]: []
   };
   onDragEnd = result => {
     const { source, destination } = result;
@@ -198,7 +198,7 @@ class SampleRender extends Component {
   };
 
   addList = e => {
-    this.setState({ [uuid()]: [] });
+    this.setState({ [uuid.uuid()]: [] });
   };
 
   // Normally you would want to split things out into separate components.
@@ -206,10 +206,10 @@ class SampleRender extends Component {
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="ITEMS" isDropDisabled={true}>
+        <Droppable droppableId={TOOLS_COLUMN_ID} isDropDisabled={true}>
           {(provided, snapshot) => (
             <Kiosk
-              innerRef={provided.innerRef}
+              ref={provided.innerRef}
               isDraggingOver={snapshot.isDraggingOver}>
               {ITEMS.map((item, index) => (
                 <Draggable
@@ -219,7 +219,7 @@ class SampleRender extends Component {
                   {(provided, snapshot) => (
                     <React.Fragment>
                       <Item
-                        innerRef={provided.innerRef}
+                        ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         isDragging={snapshot.isDragging}
@@ -253,7 +253,7 @@ class SampleRender extends Component {
             <Droppable key={list} droppableId={list}>
               {(provided, snapshot) => (
                 <Container
-                  innerRef={provided.innerRef}
+                  ref={provided.innerRef}
                   isDraggingOver={snapshot.isDraggingOver}>
                   {this.state[list].length
                     ? this.state[list].map(
@@ -264,7 +264,7 @@ class SampleRender extends Component {
                           index={index}>
                           {(provided, snapshot) => (
                             <Item
-                              innerRef={
+                              ref={
                                 provided.innerRef
                               }
                               {...provided.draggableProps}

@@ -1,5 +1,6 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import uuid from 'lodash-uuid'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import _ from 'lodash'
@@ -17,6 +18,7 @@ export default function ToolPanel() {
   }, [dispatch])
 
   return (
+
     <div>
       <Droppable
         isDropDisabled={true}
@@ -55,16 +57,11 @@ export default function ToolPanel() {
           </Kiosk>
         )}
       </Droppable>
-      <ButtonText onClick={onRemoveAllItem}> Remove All </ButtonText>
+      <Button onClick={onRemoveAllItem}>  Remove All</Button>
     </div>
   )
 }
 
-const ButtonText = styled.button`
-  margin: 0 1rem;
-  padding: 0.5rem 1rem;
-  margin: 1rem;
-`;
 
 const Item = styled.div`
   display: flex;
@@ -83,6 +80,7 @@ const Item = styled.div`
 const Clone = styled(Item)`
   + div {
     display: none!important;
+    border: red 1px solid;
   }
 `;
 
@@ -100,4 +98,19 @@ const Kiosk = styled(List)`
   right: 0;
   bottom: 0;
   width: 200px;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  color: #000;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
 `;

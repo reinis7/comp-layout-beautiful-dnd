@@ -49,7 +49,7 @@ export default function ComponentPanel() {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {_.isArray(components) && components.map((item, index) => (
+                {_.isArray(components) && (components.length > 0 ? components.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
                       <RenderCompWrapper
@@ -69,6 +69,8 @@ export default function ComponentPanel() {
                       </RenderCompWrapper>
                     )}
                   </Draggable>
+                )) : (
+                  <Notice>Drop items here</Notice>
                 ))}
                 {provided.placeholder}
               </div>
@@ -108,3 +110,15 @@ const CloseButton = styled.div`
 		z-index: 100
 `
 
+
+const Notice = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin: 0 0.5rem 0.5rem;
+  border: 1px solid transparent;
+  line-height: 1.5;
+  color: #aaa;
+`;
