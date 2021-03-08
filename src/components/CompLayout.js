@@ -100,7 +100,7 @@ const ToolPanelWrapper = styled.div`
 const CompPanelWrapper = styled.div`
     flex: 1 0 80%;
     width: 80%;
-    max-width: 450px;
+    max-width: 80%;
     height: 100%;
     padding: 10px;
     background-color: #eeeeee;
